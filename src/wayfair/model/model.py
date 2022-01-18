@@ -49,9 +49,8 @@ class Recommendation(Enum):
     DECLINE = 'Decline'
 
 
-# Signature for the model function. Not required, but feel free to adapt it or extend it # if you need it for the
-# next steps
-
+# Signature for the model function. Not required, but feel free to adapt it or extend it
+# if you need it for the next steps
 Model = Callable[[Features], Recommendation]
 
 

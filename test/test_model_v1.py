@@ -1,5 +1,5 @@
 import pytest
-from model import Features, Recommendation, model_v1 as model
+from wayfair.model.model import Features, Recommendation, model_v1 as model
 
 
 def default_features_happy(

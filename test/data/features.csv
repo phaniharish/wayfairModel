@@ -1,0 +1,6 @@
+order_id,order_hour_of_day,inventory,payment_status,zip_code_available
+7c0fdc14-62b7-4808-8bec-d67e1d02206c,17,30,OK,False
+b7b03604-9e49-4424-b8ab-a9efef1ea66f,17,16,VERIFY_BANK_DETAILS,False
+bd75f76d-0178-4f48-a750-443928149a2e,18,55,FAILED,False
+b39420e0-27ff-4de1-a5a9-de2ac0d12e07,17,97,OK,False
+26b3a0f6-57ef-4acc-9874-dbf6d52ae590,11,63,OK,False

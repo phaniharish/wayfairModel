@@ -1,0 +1,30 @@
+services:
+  model_service:
+    build: .
+
+    command: serve
+
+    ports:
+      - "8080:8080"
+
+    volumes:
+      - "./data:/usr/src/app/data"
+
+    environment:
+      - "MODEL_SERVER_WORKERS=1"
+
+  client:
+    build: .
+
+    command: client
+
+    network_mode: host
+
+    # The keyword'depends_on' allows you to define whether the service
+    # should wait until other services are ready before launching.
+    depends_on:
+      - model_service
+
+    volumes:
+      - "./data:/usr/src/app/data"
+      - "./results:/usr/src/app/results"
