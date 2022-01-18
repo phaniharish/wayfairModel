@@ -19,7 +19,7 @@ The service is separated into 3 modules:
 2. `model`: The ML simulation model provided.
 3. `serving`:
     - `predictor`: Contains the flask app which exposes the ping and invocations method
-    - `wsgi` : A simple wsgi file which points to the above flask app. We can configure it to support other ML models in future.
+    - `wsgi` : A simple wsgi file which points to the above flask app. We can configure it to support other ML models in the future.
     - `serve`: Gunicorn configuration to run the process and configure the model timeout and number of workers. We can increase the number of workers to allow more throughput for the model.
 
 ### Configuration
@@ -42,7 +42,7 @@ ml model as sklearn transformers. This will allow for a much more modular develo
 for future. With the correct implementation these can also be serialized and transferred from a training job
  and then loaded directly to a bare-bones inference endpoint.
 2. Allow processing hooks, this is much easier to add in a `pipeline` style approach and
-woul be a very valuable addition for a lot of ML endpoints. Hooks can be used to sample and store
+would be a very valuable addition for a lot of ML endpoints. Hooks can be used to sample and store
 data, validate latencies, check data thresholds and a lot of other useful use cases.
 3. Feature to sample and store input requests, intermediate features and outputs. This will 
 allow us to monitor the distribution of data and check for any deviation form the training data. It
