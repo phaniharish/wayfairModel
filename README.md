@@ -2,7 +2,7 @@
 
 To use the app simply run 
 ```
-docker compose up
+docker-compose up
 ```
 
 The entire simulation logic is contained within the `src/wayfair` module.
@@ -22,5 +22,14 @@ The service is separated into 3 modules:
     - `wsgi` : A simple wsgi file which points to the above flask app. We can configure it to support other ML models in future.
     - `serve`: Gunicorn configuration to run the process and configure the model timeout and number of workers. We can increase the number of workers to allow more throughput for the model.
 
+### Configuration
+
+The nginx configuration for the service can be found at `conf/nginx.conf`
+
+The following environment variables are currently supported for other service configuration:
+   - `MODEL_SERVER_TIMEOUT`: Configure the service timeout, default 60 seconds
+   - `MODEL_SERVER_WORKERS`: Configure number of gunicorn threads that can be invoked.
+
 ## Client
 The client is a very lightweight module which simply iterates over orders.csv and invokes the endpoint for inference.
+
