@@ -18,8 +18,7 @@ def invoke_endpoint(row) -> dict:
     if res.ok:
         return res.json()
     else:
-        return {'order_id': row['order_id'],
-                'recommendation': pd.NA}
+        return {"order_id": row["order_id"], "recommendation": pd.NA}
 
 
 def wait_for_endpoint_availability():
@@ -29,7 +28,7 @@ def wait_for_endpoint_availability():
     """
     start_time = time.time()
     # wait for a minute for the endpoint to be ready
-    while(time.time() - start_time) < 60:
+    while (time.time() - start_time) < 60:
         res = requests.get(config.ping_url)
         if res.ok:
             return True
@@ -44,20 +43,30 @@ def run() -> None:
     """
     orders_dao = OrderDAO()
     orders_dao.time_col = None
-    orders_data_required_columns = orders_dao.dataframe[['order_id',
-                                                         'customer_id', 'timestamp', 'sku_code', 'zip_code']]
-    assert wait_for_endpoint_availability(),\
-        "Service endpoint unavailable. Please check the container"
+    orders_data_required_columns = orders_dao.dataframe[
+        ["order_id", "customer_id", "timestamp", "sku_code", "zip_code"]
+    ]
+    assert (
+        wait_for_endpoint_availability()
+    ), "Service endpoint unavailable. Please check the container"
 
     logger.info("Service available starting inference")
-    results = pd.DataFrame(orders_data_required_columns.apply(invoke_endpoint, axis=1).dropna().values.tolist())
+    results = pd.DataFrame(
+        orders_data_required_columns.apply(invoke_endpoint, axis=1)
+        .dropna()
+        .values.tolist()
+    )
 
     recommendation_value_counts = results.recommendation.value_counts()
     if recommendation_value_counts.sum() == orders_data_required_columns.shape[0]:
         logger.info("All inferences succeeded!")
 
     logger.info("Result stats: \n%s", recommendation_value_counts)
-    logger.info("Deliver percentage: %s",
-                100*recommendation_value_counts.loc['Deliver']/orders_data_required_columns.shape[0])
-    results.to_json(config.result_data_path, lines=True, orient='records')
+    logger.info(
+        "Deliver percentage: %s",
+        100
+        * recommendation_value_counts.loc["Deliver"]
+        / orders_data_required_columns.shape[0],
+    )
+    results.to_json(config.result_data_path, lines=True, orient="records")
     logger.info("Finished saving results to %s", config.result_data_path)

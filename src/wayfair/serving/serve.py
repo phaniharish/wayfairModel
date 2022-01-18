@@ -34,19 +34,31 @@ def sigterm_handler(nginx_pid, gunicorn_pid):
 
 
 def start_server():
-    logger.info('Starting the inference server with {} workers.'.format(config.model_server_workers))
+    logger.info(
+        "Starting the inference server with {} workers.".format(
+            config.model_server_workers
+        )
+    )
 
     # link the log streams to stdout/err, so they will be logged to the container logs
-    subprocess.check_call(['ln', '-sf', '/dev/stdout', '/var/log/nginx/access.log'])
-    subprocess.check_call(['ln', '-sf', '/dev/stderr', '/var/log/nginx/error.log'])
+    subprocess.check_call(["ln", "-sf", "/dev/stdout", "/var/log/nginx/access.log"])
+    subprocess.check_call(["ln", "-sf", "/dev/stderr", "/var/log/nginx/error.log"])
 
-    nginx = subprocess.Popen(['nginx', '-c', config.nginx_config_file])
-    gunicorn = subprocess.Popen(['gunicorn',
-                                 '--timeout', str(config.model_server_timeout),
-                                 '-k', 'gevent',
-                                 '-b', 'unix:/tmp/gunicorn.sock',
-                                 '-w', str(config.model_server_workers),
-                                 'wayfair.serving.wsgi:app'])
+    nginx = subprocess.Popen(["nginx", "-c", config.nginx_config_file])
+    gunicorn = subprocess.Popen(
+        [
+            "gunicorn",
+            "--timeout",
+            str(config.model_server_timeout),
+            "-k",
+            "gevent",
+            "-b",
+            "unix:/tmp/gunicorn.sock",
+            "-w",
+            str(config.model_server_workers),
+            "wayfair.serving.wsgi:app",
+        ]
+    )
 
     signal.signal(signal.SIGTERM, lambda a, b: sigterm_handler(nginx.pid, gunicorn.pid))
 
@@ -58,5 +70,4 @@ def start_server():
             break
 
     sigterm_handler(nginx.pid, gunicorn.pid)
-    logger.info('Inference server exiting')
-
+    logger.info("Inference server exiting")

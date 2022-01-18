@@ -11,13 +11,7 @@ recommendation = predict(model_v1, features)
 from enum import Enum
 from typing import Callable, NamedTuple
 
-__all__ = [
-    "Features",
-    "Recommendation",
-    "Model",
-    "model_v1",
-    "predict"
-]
+__all__ = ["Features", "Recommendation", "Model", "model_v1", "predict"]
 
 
 # Here we choose NamedTuple, but you can adapt this if you prefer to use # a dataclass or libraries like Pydantic (
@@ -30,7 +24,8 @@ class Features(NamedTuple):
     :field: order_hour_of_day: int, A number between 0-23 with the hour of the day of the order timestamp
     :field: inventory: int, Sku inventory at the time of the order is placed
     :field: payment_status: str, Categorical feature: Payment status of the order returned by payment method provider
-    :field: zip_code_available: bool, whether the delivery to the zip_code is possible """
+    :field: zip_code_available: bool, whether the delivery to the zip_code is possible"""
+
     order_hour_of_day: int
 
     inventory: int
@@ -42,11 +37,12 @@ class Recommendation(Enum):
     """
     Possible predicted classes
     """
-    DELIVER = 'Deliver'
-    HOLD_CHECK_AVAILABILITY = 'HoldCheckAvailability'
-    HOLD_CHECK_DELIVERY = 'HoldCheckDelivery'
-    HOLD_CHECK_PAYMENT = 'HoldCheckPayment'
-    DECLINE = 'Decline'
+
+    DELIVER = "Deliver"
+    HOLD_CHECK_AVAILABILITY = "HoldCheckAvailability"
+    HOLD_CHECK_DELIVERY = "HoldCheckDelivery"
+    HOLD_CHECK_PAYMENT = "HoldCheckPayment"
+    DECLINE = "Decline"
 
 
 # Signature for the model function. Not required, but feel free to adapt it or extend it
@@ -75,5 +71,5 @@ def model_v1(features: Features) -> Recommendation:
 def predict(model: Model, features: Features) -> Recommendation:
     """
     Invokes model with the given features to return a recommendation.
-    Notice that model is a Callable that receives Features and returns Recommendation. """
+    Notice that model is a Callable that receives Features and returns Recommendation."""
     return model(features)

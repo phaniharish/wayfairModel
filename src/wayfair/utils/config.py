@@ -18,51 +18,51 @@ class ConfigHelper:
 
     @property
     def nginx_config_file(self) -> Path:
-        return self.content_root.joinpath('conf/nginx.conf')
+        return self.content_root.joinpath("conf/nginx.conf")
 
     @property
     def model_server_workers(self) -> int:
-        return int(os.environ.get('MODEL_SERVER_WORKERS', 1))
+        return int(os.environ.get("MODEL_SERVER_WORKERS", 1))
 
     @property
     def service_url(self) -> str:
-        return 'http://127.0.0.1:{}/invocations'.format(self.service_port)
+        return "http://127.0.0.1:{}/invocations".format(self.service_port)
 
     @property
     def ping_url(self) -> str:
-        return 'http://127.0.0.1:{}/ping'.format(self.service_port)
+        return "http://127.0.0.1:{}/ping".format(self.service_port)
 
     @property
     def service_port(self) -> int:
-        return int(os.environ.get('MODEL_SERVER_PORT', 8080))
+        return int(os.environ.get("MODEL_SERVER_PORT", 8080))
 
     @property
     def model_server_timeout(self) -> int:
-        return os.environ.get('MODEL_SERVER_TIMEOUT', 60)
+        return os.environ.get("MODEL_SERVER_TIMEOUT", 60)
 
     @property
     def order_data_path(self) -> Path:
-        return self.content_root.joinpath('data/orders.csv')
+        return self.content_root.joinpath("data/orders.csv")
 
     @property
     def payments_data_path(self) -> Path:
-        return self.content_root.joinpath('data/payments.csv')
+        return self.content_root.joinpath("data/payments.csv")
 
     @property
     def zipcode_data_path(self) -> Path:
-        return self.content_root.joinpath('data/zip_codes.csv')
+        return self.content_root.joinpath("data/zip_codes.csv")
 
     @property
     def inventory_data_path(self) -> Path:
-        return self.content_root.joinpath('data/inventory.csv')
+        return self.content_root.joinpath("data/inventory.csv")
 
     @property
     def features_data_path(self) -> Path:
-        return self.content_root.joinpath('data/features.csv')
+        return self.content_root.joinpath("data/features.csv")
 
     @property
     def result_data_path(self) -> Path:
-        return self.content_root.joinpath('results/results.json')
+        return self.content_root.joinpath("results/results.json")
 
     @property
     def default_time_column(self):

@@ -13,6 +13,7 @@ class BaseDAO:
     The subclasses mainly exist to provide class speicifc config and for future
     extensibility with factory methods and special handling use cases.
     """
+
     def __init__(self, data_path, time_col=None):
         self.data_path = data_path
         self.time_col = time_col
@@ -36,26 +37,22 @@ class BaseDAO:
 
 class OrderDAO(BaseDAO):
     def __init__(self):
-        super().__init__(config.order_data_path,
-                         config.default_time_column)
+        super().__init__(config.order_data_path, config.default_time_column)
 
 
 class InventoryDAO(BaseDAO):
     def __init__(self):
-        super().__init__(config.inventory_data_path,
-                         config.default_time_column)
+        super().__init__(config.inventory_data_path, config.default_time_column)
 
 
 class PaymentsDAO(BaseDAO):
     def __init__(self):
-        super().__init__(config.payments_data_path,
-                         config.default_time_column)
+        super().__init__(config.payments_data_path, config.default_time_column)
 
 
 class ZipcodeDAO(BaseDAO):
     def __init__(self):
-        super().__init__(config.zipcode_data_path,
-                         config.zipcode_time_column)
+        super().__init__(config.zipcode_data_path, config.zipcode_time_column)
 
 
 class FeatureDataDAO(BaseDAO):

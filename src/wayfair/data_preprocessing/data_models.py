@@ -14,4 +14,3 @@ class Orders:
     zip_code: str
     quantity: int = None
     order_fulfilled: str = None
-
